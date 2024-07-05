@@ -3,6 +3,7 @@
 
 import { sql } from "drizzle-orm";
 import {
+  integer,
   index,
   pgTableCreator,
   serial,
@@ -18,17 +19,39 @@ import {
  */
 export const createTable = pgTableCreator((name) => `riff_${name}`);
 
-export const posts = createTable(
-  "post",
+export const artists = createTable(
+  "artist",
   {
     id: serial("id").primaryKey(),
     name: varchar("name", { length: 256 }),
-    createdAt: timestamp("created_at", { withTimezone: true })
-      .default(sql`CURRENT_TIMESTAMP`)
-      .notNull(),
-    updatedAt: timestamp("updatedAt", { withTimezone: true }),
   },
   (example) => ({
-    nameIndex: index("name_idx").on(example.name),
+    artistNameIndex: index("artist_name_idx").on(example.name),
+  })
+);
+
+export const albums = createTable(
+  "album",
+  {
+    id: serial("id").primaryKey(),
+    title: varchar("title", { length: 256 }),
+    description: varchar("description", { length: 100000 }),
+    artistId: integer("artist_id").references(() => artists.id),
+  },
+  (example) => ({
+    albumTitleIndex: index("album_title_idx").on(example.title),
+  })
+);
+
+export const songs = createTable(
+  "song",
+  {
+    id: serial("id").primaryKey(),
+    title: varchar("title", { length: 256 }),
+    length: varchar("length", { length: 100 }),
+    albumId: integer("album_id").references(() => albums.id),
+  },
+  (example) => ({
+    songTitleIndex: index("song_title_idx").on(example.title),
   })
 );
