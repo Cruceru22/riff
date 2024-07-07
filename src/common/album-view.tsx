@@ -21,7 +21,7 @@ export async function FullAlbumView(props: { albumId: string }) {
           <CarouselContent>
             {songs.map((song) => (
               <CarouselItem key={song.id}>
-                <div className="song-item bg-gray-200 rounded-lg p-4">
+                <div className="song-item bg-gray-200 rounded-lg p-4 text-center">
                   <h3 className="text-xl font-bold">{song.title}</h3>
                   <p className="text-lg">Length: {song.length}</p>
                 </div>
