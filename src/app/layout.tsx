@@ -1,8 +1,7 @@
 import "~/styles/globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 
-import { GeistSans } from "geist/font/sans";
-import {TopNav} from "./_components/topnav";
+import { TopNav } from "./_components/topnav";
 
 export const metadata = {
   title: "Riff",
@@ -12,17 +11,21 @@ export const metadata = {
 
 export default function RootLayout({
   children,
+  modal,
 }: {
   children: React.ReactNode;
+  modal: React.ReactNode
 }) {
   return (
     <ClerkProvider>
       <html lang="en">
         <body>
-        <div className="grid h-screen grid-rows[auto, 1fr]">
-        <TopNav />
-        <main>{children}</main>
-        </div>
+          <div className="grid-rows[auto, 1fr] grid h-screen">
+            <TopNav />
+            <main>{children}</main>
+            {modal}
+          </div>
+          <div id="modal-root"/>
         </body>
       </html>
     </ClerkProvider>
